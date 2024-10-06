@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <sstream>
+#include <iostream>
 
 constexpr uint32_t PSARC_NX_MAGIC     = 0x4B4C524D;
 constexpr uint32_t CONST_HEADER_SIZE  = 0x00000018;
@@ -81,7 +82,10 @@ bool PSARC_NX::LoadArchive(bStream::CStream& stream)
 		return false;
 	}
 
-	assert(stream.readUInt32() == 0);                 // 0x0004
+	uint32_t unkValue = stream.readUInt32();
+	assert(unkValue == 0);                 // 0x0004
+
+	std::cout << stream.tell() << std::endl;
 
 	uint32_t headerSize = stream.readUInt32();        // 0x0008
 	uint32_t fileCount = stream.readUInt32();         // 0x000C
